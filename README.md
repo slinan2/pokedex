@@ -3,6 +3,12 @@
 
 1. `Java 11` must be installed.
 
+### Running in AWS
+Front-end: http://ec2-52-34-160-15.us-west-2.compute.amazonaws.com:8080/
+Back-end: http://ec2-52-34-160-15.us-west-2.compute.amazonaws.com:8080/api/pokemon/14
+
+Details on how the project is running live are here: 
+
 ### Running locally
 ```sh
 $ git clone https://github.com/slinan2/pokedex
