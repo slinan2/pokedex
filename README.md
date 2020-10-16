@@ -16,6 +16,10 @@ $ git clone https://github.com/slinan2/pokedex
 $ ./mvnw spring-boot:run
 $ ./mvnw spring-boot:test
 ```
+
+### Postman collection
+https://github.com/slinan2/pokedex/blob/main/Pokedex.postman_collection.json
+
 ### Extras
 - Instead of a cache layer, a full JPA integration was coded. By default, an "in memory DB" (H2) runs in the development environment.
 - Integration tests were coded (due to time restrictions I couldn't code unit tests). **Line coverage of 82%** This is the summary https://slinan2.github.io/pokedex/index.html
