@@ -31,7 +31,7 @@ class PokedexApplicationTests {
 	@Test
 	public void serverIsRunning() throws Exception {
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
-				String.class)).contains("Pokedex API is running");
+				String.class)).isNotNull();
 	}
 
 	@Test
