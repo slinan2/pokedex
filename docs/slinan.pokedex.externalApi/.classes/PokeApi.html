@@ -1,0 +1,178 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PokeApi</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">slinan.pokedex.externalApi</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PokeApi (slinan.pokedex.externalApi)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PokeApi</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.5%
+  </span>
+  <span class="absValue">
+    (49/ 53)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package slinan.pokedex.externalApi;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.google.gson.Gson;
+<i>4</i>&nbsp;import com.google.gson.JsonSyntaxException;
+<i>5</i>&nbsp;import me.sargunvohra.lib.pokekotlin.client.PokeApiClient;
+<i>6</i>&nbsp;import me.sargunvohra.lib.pokekotlin.model.ChainLink;
+<i>7</i>&nbsp;import me.sargunvohra.lib.pokekotlin.model.PokemonSpecies;
+<i>8</i>&nbsp;import me.sargunvohra.lib.pokekotlin.model.PokemonSpeciesFlavorText;
+<i>9</i>&nbsp;import org.springframework.stereotype.Component;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.io.IOException;
+<i>12</i>&nbsp;import java.net.URI;
+<i>13</i>&nbsp;import java.net.http.HttpClient;
+<i>14</i>&nbsp;import java.net.http.HttpRequest;
+<i>15</i>&nbsp;import java.net.http.HttpResponse;
+<i>16</i>&nbsp;import java.util.*;
+<i>17</i>&nbsp;import java.util.stream.Collectors;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;@Component(&quot;pokemonApi&quot;)
+<i>20</i>&nbsp;public class PokeApi {
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    private static final String API_URL = &quot;https://pokeapi.co/api/v2/&quot;;
+<i>23</i>&nbsp;    private static final String POKEMON_RESOURCE = &quot;pokemon/&quot;;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    private final HttpClient client;
+<i>26</i>&nbsp;    private final PokeApiClient pokeApi;
+<i>27</i>&nbsp;
+<b class="fc"><i>28</i>&nbsp;    PokeApi() {</b>
+<b class="fc"><i>29</i>&nbsp;        client = HttpClient.newBuilder()</b>
+<b class="fc"><i>30</i>&nbsp;                .version(HttpClient.Version.HTTP_2)</b>
+<b class="fc"><i>31</i>&nbsp;                .build();</b>
+<b class="fc"><i>32</i>&nbsp;        pokeApi = new PokeApiClient();</b>
+<b class="fc"><i>33</i>&nbsp;    }</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    public Optional&lt;PokemonDTO&gt; findById(int id) {
+<b class="fc"><i>36</i>&nbsp;        Optional&lt;PokemonDTO&gt; pokemon = Optional.empty();</b>
+<i>37</i>&nbsp;        try {
+<b class="fc"><i>38</i>&nbsp;            HttpRequest request = HttpRequest.newBuilder()</b>
+<b class="fc"><i>39</i>&nbsp;                    .uri(URI.create(API_URL + POKEMON_RESOURCE + id))</b>
+<b class="fc"><i>40</i>&nbsp;                    .GET()</b>
+<b class="fc"><i>41</i>&nbsp;                    .build();</b>
+<b class="fc"><i>42</i>&nbsp;            HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</b>
+<b class="fc"><i>43</i>&nbsp;            PokemonDTO pokemonDTO = new Gson().fromJson(response.body(), PokemonDTO.class);</b>
+<b class="fc"><i>44</i>&nbsp;            pokemon = Optional.of(pokemonDTO);</b>
+<b class="nc"><i>45</i>&nbsp;        } catch (IllegalStateException | InterruptedException | IOException e) {</b>
+<b class="nc"><i>46</i>&nbsp;            e.printStackTrace();</b>
+<b class="fc"><i>47</i>&nbsp;        }</b>
+<b class="fc"><i>48</i>&nbsp;        return pokemon;</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public Optional&lt;PokemonDTO&gt; findByName(String name) {
+<b class="fc"><i>52</i>&nbsp;        Optional&lt;PokemonDTO&gt; pokemon = Optional.empty();</b>
+<i>53</i>&nbsp;        try {
+<b class="fc"><i>54</i>&nbsp;            HttpRequest request = HttpRequest.newBuilder()</b>
+<b class="fc"><i>55</i>&nbsp;                    .uri(URI.create(API_URL + POKEMON_RESOURCE + name))</b>
+<b class="fc"><i>56</i>&nbsp;                    .GET()</b>
+<b class="fc"><i>57</i>&nbsp;                    .build();</b>
+<b class="fc"><i>58</i>&nbsp;            HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</b>
+<b class="fc"><i>59</i>&nbsp;            PokemonDTO pokemonDTO = new Gson().fromJson(response.body(), PokemonDTO.class);</b>
+<b class="fc"><i>60</i>&nbsp;            pokemon = Optional.of(pokemonDTO);</b>
+<b class="fc"><i>61</i>&nbsp;        } catch (JsonSyntaxException | IOException | InterruptedException e) {</b>
+<i>62</i>&nbsp;            //Pokemon could not bee found
+<b class="fc"><i>63</i>&nbsp;        }</b>
+<b class="fc"><i>64</i>&nbsp;        return pokemon;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public Optional&lt;PokemonDetailDTO&gt; getPokemonDetail(int id) {
+<b class="fc"><i>68</i>&nbsp;        Optional&lt;PokemonDetailDTO&gt; detailOption = Optional.empty();</b>
+<i>69</i>&nbsp;        try {
+<b class="fc"><i>70</i>&nbsp;            PokemonSpecies pokemonSpecies = pokeApi.getPokemonSpecies(id);</b>
+<b class="fc"><i>71</i>&nbsp;            PokemonDetailDTO detail = new PokemonDetailDTO();</b>
+<b class="fc"><i>72</i>&nbsp;            String description = pokemonSpecies.getFlavorTextEntries().stream()</b>
+<b class="fc"><i>73</i>&nbsp;                    .filter(t -&gt; t.getLanguage().getName().equals(&quot;en&quot;))</b>
+<b class="fc"><i>74</i>&nbsp;                    .map(PokemonSpeciesFlavorText::getFlavorText)</b>
+<b class="fc"><i>75</i>&nbsp;                    .collect(Collectors.joining(&quot;, &quot;));</b>
+<b class="fc"><i>76</i>&nbsp;            int evolutionChainId = pokemonSpecies.getEvolutionChain().getId();</b>
+<b class="fc"><i>77</i>&nbsp;            Queue&lt;ChainLink&gt; nodesToVisit = new ArrayDeque&lt;&gt;();</b>
+<b class="fc"><i>78</i>&nbsp;            ChainLink evolutionChain = pokeApi.getEvolutionChain(evolutionChainId).getChain();</b>
+<b class="fc"><i>79</i>&nbsp;            nodesToVisit.add(evolutionChain);</b>
+<b class="fc"><i>80</i>&nbsp;            List&lt;String&gt; evolutions = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>81</i>&nbsp;            while(!nodesToVisit.isEmpty()) {</b>
+<b class="fc"><i>82</i>&nbsp;                ChainLink toVisit = nodesToVisit.poll();</b>
+<b class="fc"><i>83</i>&nbsp;                evolutions.add(toVisit.getSpecies().getName());</b>
+<b class="fc"><i>84</i>&nbsp;                nodesToVisit.addAll(toVisit.getEvolvesTo());</b>
+<b class="fc"><i>85</i>&nbsp;            }</b>
+<b class="fc"><i>86</i>&nbsp;            detail.setDescription(description);</b>
+<b class="fc"><i>87</i>&nbsp;            detail.setEvolutions(evolutions);</b>
+<b class="fc"><i>88</i>&nbsp;            detailOption = Optional.of(detail);</b>
+<i>89</i>&nbsp;
+<b class="nc"><i>90</i>&nbsp;        } catch (IllegalStateException e) {</b>
+<b class="nc"><i>91</i>&nbsp;            e.printStackTrace();</b>
+<b class="fc"><i>92</i>&nbsp;        }</b>
+<b class="fc"><i>93</i>&nbsp;        return detailOption;</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-10-16 09:49</div>
+</div>
+</body>
+</html>
