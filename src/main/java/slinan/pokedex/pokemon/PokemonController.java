@@ -11,11 +11,6 @@ public class PokemonController {
         this.pokemonService = pokemonService;
     }
 
-    @RequestMapping(value = "/")
-    public String running() {
-        return "Pokedex API is running";
-    }
-
     @GetMapping(value = "/api/pokemon")
     Pokemon one(@RequestParam String name) {
         return pokemonService.findByName(name).orElseThrow(() -> new PokemonNotFoundException(name));
