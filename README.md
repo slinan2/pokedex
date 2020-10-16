@@ -8,7 +8,7 @@ Front-end: http://ec2-52-34-160-15.us-west-2.compute.amazonaws.com:8080/
 
 Back-end: http://ec2-52-34-160-15.us-west-2.compute.amazonaws.com:8080/api/pokemon/14
 
-Details on how the project is running live are here: 
+Details on how the project is running live are here: https://github.com/slinan2/pokedex/wiki
 
 ### Running locally
 ```sh
