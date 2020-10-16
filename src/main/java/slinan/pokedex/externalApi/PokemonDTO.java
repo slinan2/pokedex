@@ -16,10 +16,6 @@ public class PokemonDTO {
 
     private int id;
 
-    private int height;
-
-    private String order;
-
     public int getWeight() {
         return weight;
     }
@@ -68,19 +64,4 @@ public class PokemonDTO {
         this.id = id;
     }
 
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public String getOrder() {
-        return order;
-    }
-
-    public void setOrder(String order) {
-        this.order = order;
-    }
 }

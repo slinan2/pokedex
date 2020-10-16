@@ -21,17 +21,6 @@ public class Pokemon {
 
     public Pokemon() { }
 
-    public Pokemon(int id, String name, int weight, String picture, List<String> types, List<String> abilities, String description, List<String> evolutions) {
-        this.id = id;
-        this.name = name;
-        this.weight = weight;
-        this.types = types;
-        this.abilities = abilities;
-        this.picture = picture;
-        this.description = description;
-        this.evolutions = evolutions;
-    }
-
     public Pokemon(PokemonDTO dto) {
         this.id = dto.getId();
         this.name = dto.getName();
